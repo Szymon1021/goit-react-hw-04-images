@@ -31,7 +31,7 @@ export const App = () => {
       await fetchPhotos(search, page);
     };
     fetchData();
-    setPhoto([...photo, photo.hits]);
+    setPhoto([...fetchData, photo.hits]);
     console.log(photo);
     setIsLoading(false);
   }, [search, page, photo]);
