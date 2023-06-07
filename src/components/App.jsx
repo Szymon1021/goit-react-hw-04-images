@@ -42,6 +42,7 @@ export const App = () => {
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);
   }, []);
+
   const handleButton = () => {
     setPage(page + 1);
     setIsLoading(false);
