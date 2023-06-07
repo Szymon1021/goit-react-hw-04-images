@@ -26,15 +26,15 @@ export const App = () => {
     setIsLoading(false);
   };
   useEffect(() => {
-    setIsLoading(true);
-    const fetchData = async () => {
-      await fetchPhotos(search, page);
+    const asyncFunc = async () => {
+      setIsLoading(true);
+      const photos = await fetchPhotos(search, page);
+      setPhoto([...photo, ...photos.hits]);
+      console.log(photo);
+      setIsLoading(false);
     };
-    fetchData();
-    setPhoto([...fetchData, photo.hits]);
-    console.log(photo);
-    setIsLoading(false);
-  }, [search, page, photo]);
+    asyncFunc();
+  }, [page, search, photo]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);
