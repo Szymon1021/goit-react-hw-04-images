@@ -24,18 +24,18 @@ export const App = () => {
     const response = await fetchPhotos(search);
     setPhoto(response.hits);
     setIsLoading(false);
-
-    console.log(this.state.photos);
   };
   useEffect(() => {
-    if (!page) {
-      setIsLoading(true);
-      const photos = fetchPhotos(search, page);
-      console.log(photos);
-      setPhoto([...photos, ...photo.hits]);
-      setIsLoading(false);
-    }
-  }, [photo.hits, page, search]);
+    setIsLoading(true);
+    const fetchData = async () => {
+      await fetchPhotos(search, page);
+    };
+    fetchData();
+    setPhoto([...photo, photo.hits]);
+    console.log(photo);
+    setIsLoading(false);
+  }, [search, page, photo]);
+
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);
   }, []);
