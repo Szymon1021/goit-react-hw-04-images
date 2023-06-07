@@ -28,13 +28,21 @@ export const App = () => {
   useEffect(() => {
     const asyncFunc = async () => {
       setIsLoading(true);
-      const photos = await fetchPhotos(search, page);
-      setPhoto([...photo, ...photos.hits]);
-      console.log(photo);
+      const photos = await fetchPhotos(page);
+      setPhoto(prevPhotos => [...prevPhotos, ...photos.hits]);
       setIsLoading(false);
     };
     asyncFunc();
-  }, [page, search, photo]);
+  }, [page]);
+  useEffect(() => {
+    const asyncFunc = async () => {
+      setIsLoading(true);
+      const photos = await fetchPhotos(search);
+      setPhoto(photos.hits);
+      setIsLoading(false);
+    };
+    asyncFunc();
+  }, [search]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);
@@ -44,7 +52,7 @@ export const App = () => {
   }, []);
 
   const handleButton = () => {
-    setPage(page + 1);
+    setPage(prevPage => prevPage + 1);
     setIsLoading(false);
   };
 
