@@ -25,6 +25,7 @@ export const App = () => {
     setPhoto(response.hits);
     setIsLoading(false);
   };
+  /*
   useEffect(() => {
     const asyncFunc = async () => {
       setIsLoading(true);
@@ -34,6 +35,8 @@ export const App = () => {
     };
     asyncFunc();
   }, [page]);
+  */
+  /*
   useEffect(() => {
     const asyncFunc = async () => {
       setIsLoading(true);
@@ -43,7 +46,7 @@ export const App = () => {
     };
     asyncFunc();
   }, [search]);
-
+*/
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);
   }, []);
@@ -51,9 +54,11 @@ export const App = () => {
     window.addEventListener('keydown', handleKeyPress);
   }, []);
 
-  const handleButton = () => {
+  const handleButton = async () => {
     setPage(prevPage => prevPage + 1);
     setIsLoading(false);
+    const photos = await fetchPhotos(search, page);
+    setPhoto(prevPhotos => [...prevPhotos, ...photos.hits]);
   };
 
   const handleModalButton = photo => {
