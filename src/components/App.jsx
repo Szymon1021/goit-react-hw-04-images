@@ -15,6 +15,7 @@ export const App = () => {
   const [photoForModal, setPhotoForModal] = useState('');
 
   const handleInput = evt => {
+    evt.preventDefault();
     setSearch(evt.target.value);
   };
 
@@ -29,19 +30,33 @@ export const App = () => {
   useEffect(() => {
     const asyncFunc = async () => {
       setIsLoading(true);
-      const photos = await fetchPhotos(page);
+      const photos = await fetchPhotos(search, page);
+
       setPhoto(prevPhotos => [...prevPhotos, ...photos.hits]);
       setIsLoading(false);
     };
+
     asyncFunc();
-  }, [page]);
-  */
+  }, [page, search]);
+
   /*
   useEffect(() => {
     const asyncFunc = async () => {
       setIsLoading(true);
-      const photos = await fetchPhotos(search);
+      const photos = await fetchPhotos(page);
+
       setPhoto(photos.hits);
+      setIsLoading(false);
+    };
+    asyncFunc();
+  }, [page, search]);
+
+  useEffect(() => {
+    const asyncFunc = async () => {
+      setIsLoading(true);
+      const photos = await fetchPhotos(search);
+      setPhoto(prevPhotos => [...prevPhotos, ...photos.hits]);
+
       setIsLoading(false);
     };
     asyncFunc();
@@ -55,6 +70,7 @@ export const App = () => {
   }, []);
 
   const handleButton = async () => {
+    setPhoto(prevPhotos => [...prevPhotos, ...photos.hits]);
     setPage(prevPage => prevPage + 1);
     setIsLoading(false);
     const photos = await fetchPhotos(search, page);
