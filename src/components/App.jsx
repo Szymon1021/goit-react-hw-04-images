@@ -70,7 +70,6 @@ export const App = () => {
   }, []);
 
   const handleButton = async () => {
-    setPhoto(prevPhotos => [...prevPhotos, ...photos.hits]);
     setPage(prevPage => prevPage + 1);
     setIsLoading(false);
     const photos = await fetchPhotos(search, page);
